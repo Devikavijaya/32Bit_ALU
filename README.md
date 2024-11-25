@@ -24,19 +24,24 @@ Create a folder in your name (Note: Give folder name without any space) and Crea
 
 ## Creating Source Codes 
 
-In the Terminal, type gedit <filename>.v (ex: gedit alu_32bit.v). 
+```
+module alu_32bit_case(y,a,b,f); input [31:0]a;
+input [31:0]b;
+input [2:0]f; output reg [31:0]y; always@(*)
+begin case(f)
+3'b000:y=a&b; //AND Operation
+3'b001:y=a|b; //OR Operation
+3'b010:y=~(a&b); //NAND Operation
+3'b011:y=~(a|b); //NOR Operation
+3'b010:y=a+b; //Addition
+3'b011:y=a-b; //Subtraction
+3'b100:y=a*b; //Multiply
+default:y=32'bx;
+endcase
+end
+endmodule
 
-A Blank Document opens up into which the following source code can be typed down. 
-
-(Note : File name should be with HDL Extension)
-
-## a)To Verify the Functionality using Test Bench
-
-## Source Code – Using Case Statement :
-
-(Include program here)
-
-Use Save option or Ctrl+S to save the code or click on the save option from the top most right corner and close the text file.
+```
 
 ## Creating Test bench:
 
@@ -44,10 +49,21 @@ Similarly, create your test bench using gedit <filename_tb>.v or <filename_tb>.v
 
 ## Test Bench :
 
-(Include test bench program here)
+```
 
-Use Save option or Ctrl+S to save the code or click on the save option from the top most right corner and close the text file.
+module alu_32bit_tb_case; reg [31:0]a;
+reg [31:0]b;
+reg [2:0]f;
+wire [31:0]y;
+alu_32bit_case test2(.y(y),.a(a),.b(b),.f(f)); initial
+begin a=32'h00000000; b=32'hFFFFFFFF; #10 f=3'b000;
+#10 f=3'b001;
+#10 f=3'b010;
+#10 f=3'b100;
+end initial
+#50 $finish; endmodule
 
+```
 ## Functional Simulation: 
 
 Invoke the cadence environment by type the below commands 
@@ -172,12 +188,21 @@ Outputs: Simulation log file, waveforms for debugging
 Simulation allow to dump design and test bench signals into a waveform 
 
 Steps for simulation – Run the simulation command with simulator options
+### synthesis RTL Sschematic :
 
-## Fig 9: Design Browser window for simulation
+![Screenshot (233)](https://github.com/user-attachments/assets/f3d2a869-aa80-472a-abed-7789ebe697cf)
+
+### area report:
+
+
+
+### power report:
+
 
 ## Fig 10:Simulation Waveform Window
 
-## Fig 11:Simulation Waveform Window
+![Screenshot 2024-11-18 191510](https://github.com/user-attachments/assets/dc5c8e9f-0a28-4edc-998e-095a1b1db4a9)
+
 
 ### Result
 
